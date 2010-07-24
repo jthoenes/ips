@@ -1,0 +1,11 @@
+= Internal Pilot Simulator =
+
+The Internal Pilot Similator (IPS) allows the conduction of simulation of clinical trials with internal pilot study design (see [1]).
+
+== License ==
+
+This software is licensed under the Apache Software License, Version 2. See the LICENSE file for details.
+
+== References ==
+
+[1]  T. Friede, M. Kieser, Sample size recalculation in internal pilot study designs: A review, Biometrical Journal 48 (4) (2006) 537–555.
