@@ -1,0 +1,87 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.bergischweb</groupId>
+    <artifactId>ips</artifactId>
+    <packaging>jar</packaging>
+    <version>0.1-SNAPSHOT</version>
+    <name>Internal Pilot Simulator</name>
+    <description>Tool for the Simulation of Clinical Trials with Internal Pilot Study Design</description>
+    <url>http://jthoenes.github.com/ips</url>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>jthoenes</id>
+            <name>Johannes Th&ouml;nes</name>
+            <email>johannes.thoenes@googlemail.com</email>
+            <timezone>+1</timezone>
+            <roles>
+                <role>Maintainer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <repositories>
+        <repository>
+            <id>Maven2</id>
+            <url>http://repo1.maven.org/maven2</url>
+        </repository>
+        <repository>
+            <id>codehaus</id>
+            <name>Maven Codehaus repository</name>
+            <url>http://repository.codehaus.org/</url>
+        </repository>
+    </repositories>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>commons-math</groupId>
+            <artifactId>commons-math</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jruby</groupId>
+            <artifactId>jruby</artifactId>
+            <version>1.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>jsr166</groupId>
+            <artifactId>jsr166y</artifactId>
+            <version>1</version>
+        </dependency>
+        <dependency>
+            <groupId>jsr166</groupId>
+            <artifactId>extra166y</artifactId>
+            <version>1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jamonapi</groupId>
+            <artifactId>jamon</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>trove</groupId>
+            <artifactId>trove</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+    </dependencies>
+</project>
