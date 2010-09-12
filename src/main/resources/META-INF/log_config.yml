@@ -1,0 +1,30 @@
+# *** YAML2LOG4R ***
+log4r_config:
+  # define all pre config ...
+  pre_config:
+    global:
+      level: WARN
+    root  :
+      level: WARN
+  # define all loggers ...
+  loggers:
+    - name      : test_strategy
+      additive  : false
+      outputters: [stderr]
+  
+    - name      : instructions
+      additive  : false
+      outputters: [stderr]
+
+    - name      : distributions
+      additive  : false
+      outputters: [stderr]
+
+  # define all outputters (incl. formatters)      
+  outputters:
+    - type     : Log4r::StderrOutputter
+      name     : stderr 
+      formatter:
+        date_pattern: '%y%m%d %H:%M:%S'
+        pattern     : '%d %l: %m '
+        type        : PatternFormatter

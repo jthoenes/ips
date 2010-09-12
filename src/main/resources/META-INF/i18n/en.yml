@@ -1,0 +1,34 @@
+en-US:
+    error:
+        override_fixed_sample_size: Cannot override a fixed sample size by a method. Please use initial if intended.
+        fixed_and_initial_sample_size: Cannot mixe fixed and initial sample size.
+        internal_profile_without_sample_sizer: Cannot do an internal profile without a procedure for calculating the sample size.
+        internal_profile_with_fixed_sample_sizer: You cannot do an internal profile, when you specify a fixed sample size.
+        profile_at_non_percentage_float: Cannot profile at a float value not transformable into percentage. Either an give integer or a float percentages.
+        profile_at_negative_value: Cannot profile at a negative value. Either an give integer or a float percentages.
+        cannot_calculate_delta_blinded: Cannot calculate delta blinded in internal profile.
+        adjust_of_non_available_quantity: The quantity '%s' you tried to adjust is not available.
+        internal_profile_custom_adjust_multiple: TODO
+        reporting:
+            no_series_quantity: The quantity '%s' is not available for series reporting.
+            no_single_quantity: The quantity '%s' is not available for single reporting.
+        symbol:
+            multiple_arguments: The symbol parameter '%s' do not take multiple arguments.
+            no_symbol: The symbol parameter '%s' does not take non-symbol arguments.
+            no_argument: The symbol parameter '%s' needs to be passed an argument.
+            double_set: The symbol parameter '%s' has already been set and cannot be set twice.
+        numeric:
+            no_numeric: The numeric parameter '%s' does not take non-numeric arguments.
+            no_argument: The numeric parameter '%s' needs to be passed an argument.
+            double_set: The numeric parameter '%s' has already been set and cannot be set twice.
+            double_add_set: The numeric parameter '%s' has already been assigned an 'add_to' or 'substract_from' and cannot be aissgned twice.
+        boolean:
+            no_boolean: The boolean parameter '%s' does not take non-boolean arguments.
+            to_many: The boolean parameter '%s' can only take true, false or both - but not more arguments.
+            no_mutation: The boolean parameter '%s' does only take different mutations.
+        range:
+            multiple_arguments: The range parameter '%s' do not take multiple arguments.
+            no_range: The range parameter '%s' does not take non-symbol arguments.
+            no_argument: The range parameter '%s' needs to be passed an argument.
+            double_set: The range parameter '%s' has already been set and cannot be set twice.
+            not_ascending: The start of range the parameter '%s' needs to be bigger than the end.
