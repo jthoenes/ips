@@ -1,1 +1,3 @@
-puts "Hello World"
+# Gems
+$:.unshift File.join(File.dirname(__FILE__), '../lib')
+require 'loader'
