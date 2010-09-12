@@ -41,6 +41,16 @@
         </repository>
     </repositories>
     <build>
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>${basedir}/src/main/ruby</directory>
+            </resource>
+        </resources>
+
+
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>

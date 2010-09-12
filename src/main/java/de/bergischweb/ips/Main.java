@@ -17,6 +17,11 @@
 
 package de.bergischweb.ips;
 
+import java.util.Arrays;
+import java.util.List;
+import org.jruby.embed.PathType;
+import org.jruby.embed.ScriptingContainer;
+
 /**
  * The Main class for starting the scripts.
  *
@@ -35,5 +40,9 @@ public class Main {
      *
      */
     public static void main(String... args) {
+        ScriptingContainer container = new ScriptingContainer();
+        //List<String> loadPath = Arrays.asList("classpath:");
+        //container.setLoadPaths(loadPath);
+        container.runScriptlet(PathType.CLASSPATH, "scripts/test.rb");
     }
 }
