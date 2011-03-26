@@ -43,7 +43,5 @@ public class Main {
     ScriptingContainer container = new ScriptingContainer();
     container.put("$CLASS_LOADER", container.getProvider().getRuntime().getJRubyClassLoader());
     container.runScriptlet(PathType.CLASSPATH, "scripts/test.rb");
-
-
   }
 }
