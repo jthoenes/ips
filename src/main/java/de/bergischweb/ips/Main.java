@@ -20,6 +20,8 @@ package de.bergischweb.ips;
 import org.jruby.embed.PathType;
 import org.jruby.embed.ScriptingContainer;
 
+import java.io.IOException;
+
 /**
  * The Main class for starting the scripts.
  *
@@ -27,18 +29,21 @@ import org.jruby.embed.ScriptingContainer;
  */
 public class Main {
 
-    /**
-     * The entry point into the simulation.
-     *
-     * Executes the Ruby Start Scripts. The first parameter is the name of the script.
-     * The rest ist passed as parameter to the script.
-     *
-     * @param args The first parameter is the name of the script.
-     * The rest ist passed as parameter to the script.
-     *
-     */
-    public static void main(String... args) {
-        ScriptingContainer container = new ScriptingContainer();
-        container.runScriptlet(PathType.CLASSPATH, "scripts/test.rb");
-    }
+  /**
+   * The entry point into the simulation.
+   * <p/>
+   * Executes the Ruby Start Scripts. The first parameter is the name of the script.
+   * The rest ist passed as parameter to the script.
+   *
+   * @param args Ignored
+   */
+  public static void main(String... args) throws IOException {
+    ClassLoader classLoader = Main.class.getClassLoader();
+
+    ScriptingContainer container = new ScriptingContainer();
+    container.put("$CLASS_LOADER", container.getProvider().getRuntime().getJRubyClassLoader());
+    container.runScriptlet(PathType.CLASSPATH, "scripts/test.rb");
+
+
+  }
 }

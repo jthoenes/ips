@@ -1,36 +1,39 @@
-# Load files from dir
-def require_folder path
-	dir = File.join(File.dirname(__FILE__), path)
-	if File.exists?(File.join(dir, 'loader.rb'))
-		require File.join(dir, 'loader.rb')
-	else
-    Dir.glob(File.join(dir, '*.rb')).each {|f| puts f; require f}
-	end
-end
-
 # Generate the URI path from a classpath file
-def resource_uri path
-  ClassPathResource.new(path).uri.to_s
+def resource_path path
+  is = $CLASS_LOADER.get_resource_as_stream path
+  reader = BufferedReader.new(InputStreamReader.new(is));
+
+  file = Tempfile.new([Base64.encode64(path), '.' + path.split(".").last])
+  while line = reader.readLine
+    file.write "#{line}\n"
+  end
+  file.close
+  file.path
 end
 
+# lib in load dir
+$:.unshift File.join('lib')
 
 # Require Java Support
 require 'java'
 include_class 'de.bergischweb.simulation.helper.JRubyHelper'
-include_class 'org.springframework.core.io.ClassPathResource'
+include_class 'java.io.BufferedReader'
+include_class 'java.io.InputStreamReader'
 
 # Ruby Core Library
 require 'ostruct'
 require 'yaml'
+require 'tempfile'
+require 'base64'
 
 # Gems
-$:.unshift File.join(File.dirname(__FILE__), '../3rdparty/facets')
+$:.unshift File.join('3rdparty', 'facets')
 require 'duration'
-$:.unshift File.join(File.dirname(__FILE__), '../3rdparty/i18n')
+$:.unshift File.join('3rdparty', 'i18n')
 require 'i18n'
-$:.unshift File.join(File.dirname(__FILE__), '../3rdparty/log4r')
+$:.unshift File.join('3rdparty', 'log4r')
 require 'log4r'
-$:.unshift File.join(File.dirname(__FILE__), '../3rdparty/fastercsv')
+$:.unshift File.join('3rdparty', 'fastercsv')
 require 'fastercsv'
 
 ## Init JRuby helper
@@ -38,19 +41,23 @@ JRubyHelper.get_instance.init_ruby(Object.new)
 
 ## Translations
 translation_backend = I18n::Backend::Simple.new
-translation_backend.load_translations resource_uri('META-INF/i18n/en.yml')
+translation_backend.load_translations resource_path('META-INF/i18n/en.yml')
 I18n.backend = translation_backend
 
 ## Logger
 require 'log4r/yamlconfigurator'
 include Log4r
-YamlConfigurator.load_yaml_file resource_uri('META-INF/log_config.yml')
+YamlConfigurator.load_yaml_file resource_path('META-INF/log_config.yml')
 
 ## Modules
-module Sim; end
-module Reporting; end
-module Distribution; end
-module RNG; end
+module Sim
+end
+module Reporting
+end
+module Distribution
+end
+module RNG
+end
 
 # Thread Configuration
 Thread.abort_on_exception=true
@@ -58,6 +65,8 @@ Thread.abort_on_exception=true
 
 ## Loading files
 # ./ext
+require 'ext/object_ext'
+require 'ext/object_ext'
 require 'ext/numeric_ext'
 require 'ext/array_ext'
 require 'ext/faster_csv_ext'
@@ -78,7 +87,10 @@ require 'test_strategies/helpers/superiority'
 require 'test_strategies/helpers/variables_struct'
 
 # ./test_strategies
-module TestStrategy; class Base; end;end
+module TestStrategy
+  class Base;
+  end;
+end
 require 'test_strategies/base_iteration_approx'
 require 'test_strategies/none'
 require 'test_strategies/equivalence_dom'
@@ -120,12 +132,12 @@ require 'sim/arm.rb'
 require 'sim/config.rb'
 
 # ./dsl_proxies/handlers
-require 'dsl_proxies/handers/base'
-require 'dsl_proxies/handers/boolean_handler'
-require 'dsl_proxies/handers/symbol_handler'
-require 'dsl_proxies/handers/range_handler'
-require 'dsl_proxies/handers/numeric_handler'
-require 'dsl_proxies/handers/quantity_handler'
+require 'dsl_proxies/handlers/base'
+require 'dsl_proxies/handlers/boolean_handler'
+require 'dsl_proxies/handlers/symbol_handler'
+require 'dsl_proxies/handlers/range_handler'
+require 'dsl_proxies/handlers/numeric_handler'
+require 'dsl_proxies/handlers/quantity_handler'
 
 # ./dsl_proxies/helpers
 require 'dsl_proxies/helpers/multiple_parameters'
