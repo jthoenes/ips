@@ -1,6 +1,3 @@
-$:.unshift File.join(File.dirname(__FILE__))
-require 'loader'
-
 def simulate &block
   $proxies = DSLProxy::Simulation.new(&block)
   $proxies.call

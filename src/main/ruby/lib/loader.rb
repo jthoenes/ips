@@ -160,3 +160,5 @@ require 'dsl_proxies/simulation'
 # ./plot
 require 'plot/plot_model'
 require 'plot/r_plot'
+
+require 'simulation'
