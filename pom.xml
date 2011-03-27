@@ -2,13 +2,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.bergischweb</groupId>
-    <artifactId>ips</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>ips-root</artifactId>
+    <packaging>pom</packaging>
     <version>0.1-SNAPSHOT</version>
     <modules>
         <module>rubeus-java</module>
+        <module>ips</module>
     </modules>
-    <name>Internal Pilot Simulator</name>
+    <name>Internal Pilot Simulator [root]</name>
     <description>Tool for the Simulation of Clinical Trials with Internal Pilot Study Design</description>
     <url>http://jthoenes.github.com/ips</url>
 
@@ -47,88 +48,5 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <build>
-        <resources>
-            <resource>
-                <directory>${basedir}/src/main/resources</directory>
-            </resource>
-            <resource>
-                <directory>${basedir}/src/main/ruby</directory>
-            </resource>
-        </resources>
 
-
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.2.1</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>de.bergischweb.ips.Main</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-jar-with-dependency</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-    <dependencies>
-        <dependency>
-            <groupId>commons-math</groupId>
-            <artifactId>commons-math</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jruby</groupId>
-            <artifactId>jruby-complete</artifactId>
-            <version>1.6.0</version>
-        </dependency>
-        <dependency>
-            <groupId>jsr166</groupId>
-            <artifactId>jsr166y</artifactId>
-            <version>1</version>
-        </dependency>
-        <dependency>
-            <groupId>jsr166</groupId>
-            <artifactId>extra166y</artifactId>
-            <version>1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jamonapi</groupId>
-            <artifactId>jamon</artifactId>
-            <version>2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>trove</groupId>
-            <artifactId>trove</artifactId>
-            <version>2.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>jp.rubybizcommons.rubeus</groupId>
-            <artifactId>rubeus-java</artifactId>
-            <version>0.0.7</version>
-        </dependency>
-    </dependencies>
 </project>
