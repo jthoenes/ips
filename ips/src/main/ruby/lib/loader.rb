@@ -27,15 +27,23 @@ require 'tempfile'
 require 'base64'
 
 # Gems
-$:.unshift File.join('3rdparty', 'facets')
+$:.unshift File.join('3rdparty')
+
+$:.unshift File.join('3rdparty', 'facets', 'core')
+require 'facets'
+
+$:.unshift File.join('3rdparty', 'facets', 'more')
 require 'duration'
+
 $:.unshift File.join('3rdparty', 'i18n')
 require 'i18n'
+
 $:.unshift File.join('3rdparty', 'log4r')
 require 'log4r'
+
 $:.unshift File.join('3rdparty', 'fastercsv')
 require 'fastercsv'
-$:.unshift File.join('3rdparty')
+
 require 'active_support/core_ext/string'
 $:.unshift File.join('3rdparty', 'rubeus')
 require 'rubeus'
