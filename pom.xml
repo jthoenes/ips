@@ -3,8 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.bergischweb</groupId>
     <artifactId>ips</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <version>0.1-SNAPSHOT</version>
+    <modules>
+        <module>rubeus-java</module>
+    </modules>
     <name>Internal Pilot Simulator</name>
     <description>Tool for the Simulation of Clinical Trials with Internal Pilot Study Design</description>
     <url>http://jthoenes.github.com/ips</url>
@@ -121,6 +124,11 @@
             <groupId>trove</groupId>
             <artifactId>trove</artifactId>
             <version>2.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>jp.rubybizcommons.rubeus</groupId>
+            <artifactId>rubeus-java</artifactId>
+            <version>0.0.7</version>
         </dependency>
     </dependencies>
 </project>
