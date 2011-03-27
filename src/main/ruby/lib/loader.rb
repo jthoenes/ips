@@ -35,6 +35,10 @@ $:.unshift File.join('3rdparty', 'log4r')
 require 'log4r'
 $:.unshift File.join('3rdparty', 'fastercsv')
 require 'fastercsv'
+$:.unshift File.join('3rdparty')
+require 'active_support/core_ext/string'
+$:.unshift File.join('3rdparty', 'rubeus')
+require 'rubeus'
 
 ## Init JRuby helper
 JRubyHelper.get_instance.init_ruby(Object.new)

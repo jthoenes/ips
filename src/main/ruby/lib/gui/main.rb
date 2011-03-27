@@ -1,7 +1,3 @@
-require 'lib/simulation'
-include Java
-require "rubeus"
-
 Rubeus::Swing.irb
 
 def do_time_profile def_file
