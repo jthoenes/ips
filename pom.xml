@@ -48,5 +48,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <scm>
+        <connection>scm:git:git://github.com/jthoenes/ips.git</connection>
+        <developerConnection>scm:git:ssh://github.com:jthoenes/ips.git</developerConnection>
+        <url>http://github.com/jthoenes/ips</url>
+    </scm>
+
 
 </project>
