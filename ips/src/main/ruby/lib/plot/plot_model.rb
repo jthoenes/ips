@@ -81,18 +81,9 @@ module Plotting
     end
 
     # Dummies
-    def strategy=(strategy)
-    end
 
     def strategy
       @strategy ||= TestStrategy::None.new
     end
   end
-end
-
-
-def simulate &block
-  $proxies = DSLProxy::Simulation.new(Plotting::PlotModel.new, &block)
-  $proxies.call
-  $plot_model = $proxies.instructions
 end

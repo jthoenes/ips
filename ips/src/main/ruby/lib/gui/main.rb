@@ -14,10 +14,10 @@ def do_time_profile frm, def_file
     runs = 100
     simulation_time = nil
     multiply = 0
+    Reporting::Config.instance.silence
     loop do
       load_simulation_file def_file
       sim_config = Sim::Config.instance
-      Reporting::Config.instance.silence
 
       multiply = sim_config.runs.to_f/runs
       sim_config.runs = runs
@@ -26,13 +26,15 @@ def do_time_profile frm, def_file
       run_simulation
       simulation_time = Duration.new Time.now - simulation_start
 
-      break if simulation_time.minutes > 0
+      break if simulation_time.minutes > 1
+      break if simulation_time.seconds > 1
       unless simulation_time.to_i == 0
         runs = ((runs.to_f/simulation_time.to_i)*80).to_i
       else
         runs *= 10
       end
     end
+    Reporting::Config.instance.unsilence
 
     message = "For #{runs} Runs it took: #{simulation_time}\n"
     message += "Estimate time for #{(runs*multiply).to_i} Runs: #{Duration.new(simulation_time.to_i * multiply)}"
@@ -75,7 +77,7 @@ def task_in_background frm
       popup.modal = true
       popup.content_pane.add progress_bar
       popup.default_close_operation= javax.swing.JDialog::DO_NOTHING_ON_CLOSE
-      popup.set_size(100, 20)
+      popup.set_size(800, 20)
       popup.pack
       popup.set_location_relative_to(frm)
       popup.visible = true
@@ -173,24 +175,21 @@ def show_plot_settings_panel(file, settings_panel)
       JButton.new "Create Plot" do
         r_plot = RPlot.new(result_file, y_axis, vary)
 
-        jfile = java.io.File.new r_plot.pdf_file.path
-        jdesktop = java.awt.Desktop.getDesktop()
-        jdesktop.open jfile
+        #jfile = java.io.File.new r_plot.pdf_file.path
+        #jdesktop = java.awt.Desktop.getDesktop()
+        #jdesktop.open jfile
 
-        if javax.swing.JOptionPane.showOptionDialog(nil, "Do you want to save the R plotting file?", "Save?",
-                                                    javax.swing.JOptionPane::YES_NO_OPTION, javax.swing.JOptionPane::QUESTION_MESSAGE, nil, nil, nil) == javax.swing.JOptionPane::YES_OPTION
-          # Saving the R File
-          ####
-          ch = javax.swing.JFileChooser.new
-          ch.fileFilter = javax.swing.filechooser.FileNameExtensionFilter.new("R Files", ["R"].to_java(:string))
-          if ch.show_save_dialog(nil) == javax.swing.JFileChooser::APPROVE_OPTION
-            File.open(ch.selected_file.path, 'wb') do |f|
-              f.write r_plot.plot_file.read
-            end
-            javax.swing.JOptionPane.showMessageDialog(nil, "File saved!", "Information", javax.swing.JOptionPane::INFORMATION_MESSAGE)
+        # Saving the R File
+        ####
+        ch = javax.swing.JFileChooser.new(File.dirname(Reporting::Config.instance.create_filename('R')))
+        ch.fileFilter = javax.swing.filechooser.FileNameExtensionFilter.new("R Files", ["R"].to_java(:string))
+        if ch.show_save_dialog(nil) == javax.swing.JFileChooser::APPROVE_OPTION
+          File.open(ch.selected_file.path, 'wb') do |f|
+            f.write r_plot.plot_file.read
           end
-          ####
+          information_message("SAVED!", "File saved")
         end
+        ####
       end
     end
   end

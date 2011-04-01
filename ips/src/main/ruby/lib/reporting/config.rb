@@ -28,6 +28,10 @@ module Reporting
       @silence = true
     end
 
+    def unsilence
+      @silence = false
+    end
+
     private
     def sim_config
       @sim_config ||= Sim::Config.instance

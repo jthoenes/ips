@@ -16,7 +16,6 @@ end
 
 class RPlot
 
-  OUTPUT_PATH = File.join(Dir.tmpdir, 'simulation_rplot_out.pdf')
   PLOT_PATH = File.join(Dir.tmpdir, 'simulation_rplot.R')
 
   def initialize file, y_axis, vary
@@ -34,7 +33,7 @@ class RPlot
   def pdf_file
     rpath = UserConfig.instance.R_path
     `#{rpath} <#{plot_file.path} --no-save`
-    File.open(OUTPUT_PATH)
+    File.open(output_path)
   end
 
   def plot_file
@@ -46,7 +45,7 @@ class RPlot
   def plot_code
     code = CodeBuffer.new
     code << "library(lattice)"
-    code << "trellis.device(device='pdf', file='#{OUTPUT_PATH}', paper='a4')"
+    code << "trellis.device(device='pdf', file='#{output_path}', paper='a4')"
     code << ""
     code << "plot_data <- read.csv('#@result_file')"
     code << ""
@@ -66,10 +65,11 @@ class RPlot
      subset_expression = 'TRUE' if subset_expression == '' || subset_expression.nil?
      axes = "#@y_axis ~ #@x_axis"
      splots =  @subplot.empty? ? "" : "| " + @subplot.map{|q| "factor(#{q})"}.join(' + ') 
-     group_expr = ""
      group_expr = "group = factor(#@group)" if @group
      code << "xyplot(#{axes} #{splots}, data = plot_data, type='l', auto.key = list(space = 'top', lines=TRUE), sub='#{sub}',"
-     code << "subset = #{subset_expression}, #{group_expr})"
+     code << "subset = #{subset_expression}"
+     code << ", #{group_expr}" if group_expr
+     code << ")"
      code << ""
    end
    
@@ -94,5 +94,9 @@ class RPlot
 
   def file_data
     FasterCSV.read(@result_file).transpose.to_h
+  end
+
+  def output_path
+    Reporting::Config.instance.create_filename('pdf')
   end
 end
