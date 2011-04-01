@@ -50,7 +50,7 @@
 
     <scm>
         <connection>scm:git:git://github.com/jthoenes/ips.git</connection>
-        <developerConnection>scm:git:ssh://github.com:jthoenes/ips.git</developerConnection>
+        <developerConnection>scm:git:https://jthoenes@github.com/jthoenes/ips.git</developerConnection>
         <url>http://github.com/jthoenes/ips</url>
     </scm>
 
