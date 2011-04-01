@@ -3,7 +3,7 @@
   <groupId>jp.rubybizcommons.rubeus</groupId>
   <artifactId>rubeus-java</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.7</version>
+  <version>0.0.7-SNAPSHOT</version>
   <name>rubeus-java</name>
   <url>http://maven.apache.org</url>
 	<build>
