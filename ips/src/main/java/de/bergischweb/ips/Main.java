@@ -51,6 +51,7 @@ public class Main {
                 e.printStackTrace(writer);
 
                 message("Unexpected Error", "An error occured. Please see the log file " + f.getPath());
+                e.printStackTrace();
 
             } catch (Exception e1) {
                 StringWriter result = new StringWriter();
@@ -58,6 +59,7 @@ public class Main {
                 e1.printStackTrace(writer);
 
                 message("Fatal Error", "StackTrace: \n\n" + result.toString());
+                e1.printStackTrace();
             }
         }
 
