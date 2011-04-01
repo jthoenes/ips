@@ -3,7 +3,7 @@ def resource_path path
   is = $CLASS_LOADER.get_resource_as_stream path
   reader = BufferedReader.new(InputStreamReader.new(is));
 
-  file = Tempfile.new([Base64.encode64(path), '.' + path.split(".").last])
+  file = Tempfile.new(["ips", '.' + path.split(".").last])
   while line = reader.readLine
     file.write "#{line}\n"
   end
