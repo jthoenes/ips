@@ -3,47 +3,62 @@ Rubeus::Swing.irb
 javax.swing.UIManager.set_look_and_feel(javax.swing.UIManager.system_look_and_feel_class_name)
 
 
-def do_time_profile def_file
-  runs = 100
-  simulation_time = nil
-  multiply = 0
-  loop do
-    load_simulation_file def_file
-    sim_config = Sim::Config.instance
-    Reporting::Config.instance.silence
+def information_message title, message
+  Thread.new do
+    javax.swing.JOptionPane.showMessageDialog(nil, message, title, javax.swing.JOptionPane::INFORMATION_MESSAGE)
+  end
+end
 
-    multiply = sim_config.runs.to_f/runs
-    sim_config.runs = runs
+def do_time_profile frm, def_file
+  task_in_background(frm) do
+    runs = 100
+    simulation_time = nil
+    multiply = 0
+    loop do
+      load_simulation_file def_file
+      sim_config = Sim::Config.instance
+      Reporting::Config.instance.silence
 
-    simulation_start = Time.now
-    run_simulation
-    simulation_time = Duration.new Time.now - simulation_start
+      multiply = sim_config.runs.to_f/runs
+      sim_config.runs = runs
 
-    break if simulation_time.minutes > 0
-    break if simulation_time.seconds > 0
-    unless simulation_time.to_i == 0
-      runs = ((runs.to_f/simulation_time.to_i)*80).to_i
-    else
-      runs *= 10
+      simulation_start = Time.now
+      run_simulation
+      simulation_time = Duration.new Time.now - simulation_start
+
+      break if simulation_time.minutes > 0
+      unless simulation_time.to_i == 0
+        runs = ((runs.to_f/simulation_time.to_i)*80).to_i
+      else
+        runs *= 10
+      end
     end
+
+    message = "For #{runs} Runs it took: #{simulation_time}\n"
+    message += "Estimate time for #{(runs*multiply).to_i} Runs: #{Duration.new(simulation_time.to_i * multiply)}"
+
+    information_message("Time-Estimate", message)
   end
 
-  message = "For #{runs} Runs it took: #{simulation_time}\n"
-  message += "Estimate time for #{(runs*multiply).to_i} Runs: #{Duration.new(simulation_time.to_i * multiply)}"
-
-  javax.swing.JOptionPane.showMessageDialog(nil, message, "Information", javax.swing.JOptionPane::INFORMATION_MESSAGE)
-
 end
 
-def do_run def_file
-  load_simulation_file def_file
-  run_simulation
+def do_run frm, def_file
+  task_in_background(frm) do
+    load_simulation_file def_file
+    run_simulation
+
+    information_message("SUCCESS", "Simulation finished")
+  end
 end
 
-def do_quick_run def_file, runs
-  load_simulation_file def_file
-  Sim::Config.instance.runs = runs
-  run_simulation
+def do_quick_run frm, def_file, runs
+  task_in_background(frm) do
+    load_simulation_file def_file
+    Sim::Config.instance.runs = runs
+    run_simulation
+
+    information_message("SUCCESS", "Simulation finished")
+  end
 end
 
 def task_in_background frm
@@ -71,7 +86,6 @@ def task_in_background frm
     # Hide progress bar
   ensure
     popup.visible= false
-    javax.swing.JOptionPane.show_message_dialog(nil, "Simulation finished", "SUCCESS", javax.swing.JOptionPane::INFORMATION_MESSAGE)
     frm.enabled=true
   end
 end
@@ -223,15 +237,13 @@ JFrame.new("Internal Pilot Simulation") do |frm|
       JPanel.new do |p|
         JButton.new("Run!") do
           unless def_file.nil? and File.exists?(def_file)
-            task_in_background(frm) do
-              case option
-                when :time_profile
-                  do_time_profile(def_file)
-                when :run
-                  do_run(def_file)
-                when :quick_run
-                  do_quick_run(def_file, @run_field.text.to_i)
-              end
+            case option
+              when :time_profile
+                do_time_profile(frm, def_file)
+              when :run
+                do_run(frm, def_file)
+              when :quick_run
+                do_quick_run(frm, def_file, @run_field.text.to_i)
             end
           else
             javax.swing.JOptionPane.showMessageDialog(nil, "Please select a valid ruby file containing the simulation definition.", "Error",
