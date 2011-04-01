@@ -25,6 +25,7 @@ require 'ostruct'
 require 'yaml'
 require 'tempfile'
 require 'base64'
+require 'rbconfig'
 
 # Gems
 $:.unshift File.join('3rdparty')

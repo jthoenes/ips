@@ -11,7 +11,7 @@ module Reporting
     end
 
     def create_filename *format
-      return '/dev/null' if @silence
+      return File.null if @silence
       
       parts = sim_config.dsl_file.split('.').reject{|p| p =~ /^(rb|dsl)$/ }
       parts += format
