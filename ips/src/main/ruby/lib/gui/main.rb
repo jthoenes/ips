@@ -199,7 +199,7 @@ JFrame.new("Internal Pilot Simulation") do |frm|
         rbtn = JRadioButton.new('Time-Estimate', false, :tool_tip_text => 'Estimate the time to run.')
         rbtn.add_action_listener { option = :time_profile; @run_field.enabled = false }
         group.add rbtn
-        rbtn = JRadioButton.new('Run', true, :tool_tip_text => 'Run the simulationh')
+        rbtn = JRadioButton.new('Run', true, :tool_tip_text => 'Run the simulation')
         rbtn.add_action_listener { option = :run; @run_field.enabled = false }
         group.add rbtn
         rbtn = JRadioButton.new('Quick-Run', false, :tool_tip_text => 'Run the simulation with specified runs.')
