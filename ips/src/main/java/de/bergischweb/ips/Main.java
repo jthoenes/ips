@@ -33,6 +33,7 @@ import java.io.StringWriter;
  */
 public class Main {
 
+
     public static class FatalExceptionHandler implements Thread.UncaughtExceptionHandler {
         /**
          * Method invoked when the given thread terminates due to the
@@ -77,12 +78,11 @@ public class Main {
      * @param args Ignored
      */
     public static void main(String... args) throws IOException {
+        Thread.setDefaultUncaughtExceptionHandler(new FatalExceptionHandler());
         ClassLoader classLoader = Main.class.getClassLoader();
 
         ScriptingContainer container = new ScriptingContainer();
         container.put("$CLASS_LOADER", container.getProvider().getRuntime().getJRubyClassLoader());
         container.runScriptlet(PathType.CLASSPATH, "scripts/run_gui.rb");
-
-        Thread.setDefaultUncaughtExceptionHandler(new FatalExceptionHandler());
     }
 }
