@@ -20,7 +20,11 @@ package de.bergischweb.ips;
 import org.jruby.embed.PathType;
 import org.jruby.embed.ScriptingContainer;
 
+import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * The Main class for starting the scripts.
@@ -29,19 +33,54 @@ import java.io.IOException;
  */
 public class Main {
 
-  /**
-   * The entry point into the simulation.
-   * <p/>
-   * Executes the Ruby Start Scripts. The first parameter is the name of the script.
-   * The rest ist passed as parameter to the script.
-   *
-   * @param args Ignored
-   */
-  public static void main(String... args) throws IOException {
-    ClassLoader classLoader = Main.class.getClassLoader();
+    public static class FatalExceptionHandler implements Thread.UncaughtExceptionHandler {
+        /**
+         * Method invoked when the given thread terminates due to the
+         * given uncaught exception.
+         * <p>Any exception thrown by this method will be ignored by the
+         * Java Virtual Machine.
+         *
+         * @param t the thread
+         * @param e the exception
+         */
+        @Override
+        public void uncaughtException(Thread t, Throwable e) {
+            try {
+                File f = File.createTempFile("error", "log");
+                PrintWriter writer = new PrintWriter(f);
+                e.printStackTrace(writer);
 
-    ScriptingContainer container = new ScriptingContainer();
-    container.put("$CLASS_LOADER", container.getProvider().getRuntime().getJRubyClassLoader());
-    container.runScriptlet(PathType.CLASSPATH, "scripts/run_gui.rb");
-  }
+                message("Unexpected Error", "An error occured. Please see the log file " + f.getPath());
+
+            } catch (Exception e1) {
+                StringWriter result = new StringWriter();
+                PrintWriter writer = new PrintWriter(result);
+                e1.printStackTrace(writer);
+
+                message("Fatal Error", "StackTrace: \n\n" + result.toString());
+            }
+        }
+
+        private void message(String title, String message) {
+            JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * The entry point into the simulation.
+     * <p/>
+     * Executes the Ruby Start Scripts. The first parameter is the name of the script.
+     * The rest ist passed as parameter to the script.
+     *
+     * @param args Ignored
+     */
+    public static void main(String... args) throws IOException {
+        ClassLoader classLoader = Main.class.getClassLoader();
+
+        ScriptingContainer container = new ScriptingContainer();
+        container.put("$CLASS_LOADER", container.getProvider().getRuntime().getJRubyClassLoader());
+        container.runScriptlet(PathType.CLASSPATH, "scripts/run_gui.rb");
+
+        Thread.setDefaultUncaughtExceptionHandler(new FatalExceptionHandler());
+    }
 }

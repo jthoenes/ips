@@ -46,21 +46,9 @@ end
 def task_in_background frm
   javax.swing.JOptionPane.showMessageDialog(frm, "Simulation started", "Information", javax.swing.JOptionPane::INFORMATION_MESSAGE)
 
-  begin
-    yield
-    # Hide progress bar
-    javax.swing.JOptionPane.showMessageDialog(frm, "Simulation finished", "Information", javax.swing.JOptionPane::INFORMATION_MESSAGE)
-  rescue Exception => e
-    begin
-      file = Tempfile.new(["error", '.log'])
-      file.write(e.detail)
-      file.close
-
-      javax.swing.JOptionPane.show_message_dialog(frm, "Error in Simulation. See file #{file.path}", "Error", javax.swing.JOptionPane::ERROR_MESSAGE)
-    rescue Exception => e
-      javax.swing.JOptionPane.show_message_dialog(frm, e.detail, "Fatal Error", javax.swing.JOptionPane::ERROR_MESSAGE)
-    end
-  end
+  yield
+  # Hide progress bar
+  javax.swing.JOptionPane.showMessageDialog(frm, "Simulation finished", "Information", javax.swing.JOptionPane::INFORMATION_MESSAGE)
 end
 
 def show_plot_settings_panel(file, settings_panel)
