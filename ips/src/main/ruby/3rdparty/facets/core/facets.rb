@@ -1,6 +1,7 @@
-dir = File.dirname(__FILE__) + '/facets/'
-Dir.new(dir).each do |path|
-  next unless File.extname(path) == '.rb'
-  require('facets/' + path)  #require(dir + path)
+path = __FILE__.chomp('.rb')
+base = File.basename(path)
+Dir[File.join(path, '*.rb')].each do |lib|
+  #require lib # why is this so much slower?
+  require "#{base}/#{File.basename(lib)}"
 end
 

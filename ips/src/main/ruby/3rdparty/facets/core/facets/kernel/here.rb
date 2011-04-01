@@ -6,7 +6,7 @@ module Kernel
   #   b = here
   #   eval( "a", b )  #=> 3
   #
-  alias_method :here, :binding
+  # alias_method :here, :binding
 
 end
 
