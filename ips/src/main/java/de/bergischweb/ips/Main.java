@@ -79,6 +79,7 @@ public class Main {
      */
     public static void main(String... args) throws IOException {
         Thread.setDefaultUncaughtExceptionHandler(new FatalExceptionHandler());
+        
         ClassLoader classLoader = Main.class.getClassLoader();
 
         ScriptingContainer container = new ScriptingContainer();

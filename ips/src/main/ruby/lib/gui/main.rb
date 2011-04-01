@@ -1,5 +1,7 @@
 Rubeus::Swing.irb
 
+javax.swing.UIManager.set_look_and_feel(javax.swing.UIManager.system_look_and_feel_class_name)
+
 def do_time_profile def_file
   runs = 100
   simulation_time = nil
