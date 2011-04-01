@@ -47,9 +47,10 @@ public class Main {
         @Override
         public void uncaughtException(Thread t, Throwable e) {
             try {
-                File f = File.createTempFile("error", "log");
+                File f = File.createTempFile("error", ".log");
                 PrintWriter writer = new PrintWriter(f);
                 e.printStackTrace(writer);
+                writer.close();
 
                 message("Unexpected Error", "An error occured. Please see the log file " + f.getPath());
                 e.printStackTrace();
