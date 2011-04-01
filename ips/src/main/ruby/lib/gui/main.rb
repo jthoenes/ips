@@ -2,6 +2,7 @@ Rubeus::Swing.irb
 
 javax.swing.UIManager.set_look_and_feel(javax.swing.UIManager.system_look_and_feel_class_name)
 
+
 def do_time_profile def_file
   runs = 100
   simulation_time = nil
@@ -46,11 +47,33 @@ def do_quick_run def_file, runs
 end
 
 def task_in_background frm
-  javax.swing.JOptionPane.showMessageDialog(frm, "Simulation started", "Information", javax.swing.JOptionPane::INFORMATION_MESSAGE)
+  popup = javax.swing.JDialog.new
+  begin
+    frm.enabled = false
 
-  yield
-  # Hide progress bar
-  javax.swing.JOptionPane.showMessageDialog(frm, "Simulation finished", "Information", javax.swing.JOptionPane::INFORMATION_MESSAGE)
+    t = Thread.new do
+      progress_bar = javax.swing.JProgressBar.new
+      progress_bar.indeterminate = true
+
+
+      popup.title = "Simulation Running"
+      popup.modal = true
+      popup.content_pane.add progress_bar
+      popup.default_close_operation= javax.swing.JDialog::DO_NOTHING_ON_CLOSE
+      popup.set_size(100, 20)
+      popup.pack
+      popup.set_location_relative_to(frm)
+      popup.visible = true
+    end
+
+    yield
+
+    # Hide progress bar
+  ensure
+    popup.visible= false
+    javax.swing.JOptionPane.show_message_dialog(nil, "Simulation finished", "SUCCESS", javax.swing.JOptionPane::INFORMATION_MESSAGE)
+    frm.enabled=true
+  end
 end
 
 def show_plot_settings_panel(file, settings_panel)
