@@ -3,13 +3,13 @@
     <parent>
         <artifactId>ips-root</artifactId>
         <groupId>de.bergischweb</groupId>
-        <version>0.1.1-SNAPSHOT</version>
+        <version>0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.bergischweb</groupId>
     <artifactId>ips</artifactId>
-    <version>${parent.version}</version>
+    <version>0.1.1-SNAPSHOT</version>
     <name>Internal Pilot Simulator</name>
     <description>Tool for the Simulation of Clinical Trials with Internal Pilot Study Design</description>
 
@@ -94,7 +94,7 @@
         <dependency>
             <groupId>jp.rubybizcommons.rubeus</groupId>
             <artifactId>rubeus-java</artifactId>
-            <version>0.0.7-SNAPSHOT</version>
+            <version>0.0.7</version>
         </dependency>
     </dependencies>
 </project>
