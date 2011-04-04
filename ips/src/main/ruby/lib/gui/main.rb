@@ -26,8 +26,7 @@ def do_time_profile frm, def_file
       run_simulation
       simulation_time = Duration.new Time.now - simulation_start
 
-      break if simulation_time.minutes > 1
-      break if simulation_time.seconds > 1
+      break if simulation_time.seconds > 30
       unless simulation_time.to_i == 0
         runs = ((runs.to_f/simulation_time.to_i)*80).to_i
       else
