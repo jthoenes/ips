@@ -1,8 +1,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>D:\private\ips\ips\target\ips-0.1.2-SNAPSHOT-jar-with-dependencies.jar</jar>
-  <outfile>D:\private\ips\ips\target\ips-0.1.2-SNAPSHOT.exe</outfile>
+  <jar>D:\private\ips\ips\target\ips-0.1.2-jar-with-dependencies.jar</jar>
+  <outfile>D:\private\ips\ips\target\ips-0.1.2.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir></chdir>
