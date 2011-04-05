@@ -9,7 +9,7 @@
 
     <groupId>de.bergischweb</groupId>
     <artifactId>ips</artifactId>
-    <version>0.1.2-SNAPSHOT</version>
+    <version>0.1.2</version>
     <name>Internal Pilot Simulator</name>
     <description>Tool for the Simulation of Clinical Trials with Internal Pilot Study Design</description>
 
